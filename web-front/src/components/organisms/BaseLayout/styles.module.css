@@ -1,0 +1,23 @@
+.container {
+  width: 90%;
+  margin: 0px auto;
+}
+
+@media screen and (min-width: 960px) {
+  .container {
+    width: 50%;
+    margin: 0px auto;
+  }
+}
+
+.title {
+  text-align: center;
+  font-family: 'Times New Roman', Times, serif;
+  color: #fff;
+  font-size: 48px;
+}
+
+.header {
+  width: 100%;
+  /* padding: 40px auto; */
+}

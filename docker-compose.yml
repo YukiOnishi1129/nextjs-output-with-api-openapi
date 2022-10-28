@@ -1,0 +1,51 @@
+version: "3.9"
+services:
+  frontend:
+    container_name: nestjs_output_with_openapi_frontend
+    build: ./web-front
+    tty: true
+    ports:
+      - 80:3000
+    volumes:
+      - ./web-front:/frontend
+      - /etc/localtime:/etc/localtime:ro # タイムゾーンを日本時刻に設定
+    environment:
+      TZ: Asia/Tokyo # タイムゾーンを日本時刻に設定
+    security_opt:
+      - seccomp:unconfined
+    command: sh -c 'npm install && npm run dev'
+  backend:
+    container_name: nestjs_output_with_openapi_backend
+    build: ./api-server
+    tty: true
+    depends_on:
+      - db
+    volumes:
+      - ./api-server:/backend
+      - /etc/localtime:/etc/localtime:ro # タイムゾーンを日本時刻に設定
+    environment:
+      TZ: Asia/Tokyo # タイムゾーンを日本時刻に設定
+    ports:
+      - 8080:3000
+    security_opt:
+      - seccomp:unconfined
+    command: sh -c 'npm install && npm run start:dev'
+
+  db:
+    container_name: nestjs_output_with_openapi_db
+    environment:
+      - MYSQL_DATABASE=NEXTJS_OUTPUT_WITH_OPENAPI_DB
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pass
+      - MYSQL_ROOT_PASSWORD=pass
+      - "TZ=Asia/Tokyo" # タイムゾーンを日本時刻に設定
+    image: mysql:8.0
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    volumes:
+      - nestjs_output_with_openapi_data:/var/lib/mysql
+      - ./mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+    ports:
+      - 3306:3306
+
+volumes:
+  nestjs_output_with_openapi_data:
