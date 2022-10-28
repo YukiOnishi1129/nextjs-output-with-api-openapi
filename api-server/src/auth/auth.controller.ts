@@ -10,12 +10,9 @@ import {
 import {
   ApiTags,
   ApiBearerAuth,
-  ApiBadRequestResponse,
   ApiOkResponse,
   ApiUnauthorizedResponse,
-  ApiConflictResponse,
   ApiCreatedResponse,
-  ApiInternalServerErrorResponse,
 } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';

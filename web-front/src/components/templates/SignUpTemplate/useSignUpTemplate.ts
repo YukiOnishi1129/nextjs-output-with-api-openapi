@@ -7,11 +7,11 @@ import { useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { signUpApi } from '@/apis/authApi';
 import { NAVIGATION_PATH } from '@/constants/navigation';
-import { UserType } from '@/interfaces/User';
+import { UserEntity } from '@/types/typescript-axios/api';
 import { EventType } from '@/interfaces/Event';
 
 type Params = {
-  singIn: (user: UserType) => Promise<void>;
+  singIn: (user: UserEntity) => Promise<void>;
 };
 
 type StatesType = {

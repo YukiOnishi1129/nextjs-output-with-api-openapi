@@ -4,7 +4,7 @@
  * @package contexts
  */
 import { FC, ReactNode, useContext, createContext } from 'react';
-import { TodoType } from '@/interfaces/Todo';
+import { TodoEntity } from '@/types/typescript-axios/api';
 import { useTodo } from '@/hooks/useTodo';
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
 };
 
 interface ContextInterface {
-  originTodoList: Array<TodoType>;
+  originTodoList: Array<TodoEntity>;
   addTodo: (title: string, content: string) => Promise<void>;
   updateTodo: (id: number, title: string, content: string) => Promise<void>;
   deleteTodo: (targetId: number) => Promise<void>;

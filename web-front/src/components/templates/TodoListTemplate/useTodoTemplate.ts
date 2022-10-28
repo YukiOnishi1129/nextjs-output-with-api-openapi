@@ -4,17 +4,17 @@
  * @package hooks
  */
 import { useMemo, useState, useCallback } from 'react';
-import { TodoType } from '@/interfaces/Todo';
+import { TodoEntity } from '@/types/typescript-axios/api';
 import { EventType } from '@/interfaces/Event';
 
 type Params = {
-  originTodoList: Array<TodoType>;
+  originTodoList: Array<TodoEntity>;
   deleteTodo: (targetId: number) => Promise<void>;
 };
 
 type StatesType = {
   searchKeyword: string;
-  showTodoList: Array<TodoType>;
+  showTodoList: Array<TodoEntity>;
 };
 
 type ActionsType = {

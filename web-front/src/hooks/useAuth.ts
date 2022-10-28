@@ -6,7 +6,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { authenticationApi } from '@/apis/authApi';
-import { UserType } from '@/interfaces/User';
+import { UserEntity } from '@/types/typescript-axios/api';
 import { NAVIGATION_LIST, NAVIGATION_PATH } from '@/constants/navigation';
 
 /**
@@ -15,13 +15,13 @@ import { NAVIGATION_LIST, NAVIGATION_PATH } from '@/constants/navigation';
  */
 export const useAuth = () => {
   const router = useRouter();
-  const [user, setUser] = useState<UserType | undefined>(undefined);
+  const [user, setUser] = useState<UserEntity | undefined>(undefined);
   const [isAuth, setIsAuth] = useState<boolean>(false);
 
   /**
    * グローバルの認証状態をログイン済にする (ログイン)
    */
-  const singIn = useCallback(async (user: UserType) => {
+  const singIn = useCallback(async (user: UserEntity) => {
     setUser(user);
     setIsAuth(true);
   }, []);

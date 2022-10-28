@@ -6,7 +6,7 @@ import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { AuthResponseDto } from './dto/auth-user.dto';
 import { PrismaService } from '../prisma.service';
 import { JwtPayload } from '../lib/jwt/interfaces/jwt-payload.interface';
-import { ResponseUserType } from '../interfaces/User';
+import { UserEntity } from './entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -35,7 +35,7 @@ export class AuthService {
         'メールアドレスまたはパスワードが違います',
       );
     }
-    const resUser: ResponseUserType = {
+    const resUser: UserEntity = {
       id: user.id,
       name: user.name,
       email: user.email,
@@ -81,7 +81,7 @@ export class AuthService {
       },
     });
 
-    const resUser: ResponseUserType = {
+    const resUser: UserEntity = {
       id: createdUser.id,
       name: createdUser.name,
       email: createdUser.email,
@@ -110,7 +110,7 @@ export class AuthService {
 
     if (!user) throw new UnauthorizedException(`認証データが存在しません`);
 
-    const resUser: ResponseUserType = {
+    const resUser: UserEntity = {
       id: user.id,
       name: user.name,
       email: user.email,
