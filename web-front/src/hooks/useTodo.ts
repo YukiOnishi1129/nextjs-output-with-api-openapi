@@ -6,7 +6,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { fetchTodoListApi, createTodoApi, updateTodoApi, deleteTodoApi } from '@/apis/todoApi';
-import { TodoType } from '@/interfaces/Todo';
+import { TodoEntity } from '@/types/typescript-axios/api';
 
 /**
  * useTodo
@@ -14,13 +14,13 @@ import { TodoType } from '@/interfaces/Todo';
 export const useTodo = () => {
   const { isAuth } = useAuthContext();
   /* todo list */
-  const [originTodoList, setOriginTodoList] = useState<Array<TodoType>>([]);
+  const [originTodoList, setOriginTodoList] = useState<Array<TodoEntity>>([]);
 
   /* actions */
 
   const fetchTodoList = useCallback(async (): Promise<void> => {
     const res = await fetchTodoListApi();
-    setOriginTodoList(res?.data && typeof res.data === 'object' ? res.data : []);
+    setOriginTodoList(res?.data?.todos && typeof res.data.todos === 'object' ? res.data.todos : []);
   }, []);
 
   /**
@@ -31,13 +31,18 @@ export const useTodo = () => {
   const addTodo = useCallback(
     async (title: string, content: string) => {
       const res = await createTodoApi(title, content);
-      if (!res?.data || typeof res.data !== 'object') return;
+      const todo = res?.data?.todo;
+      if (!todo || typeof todo !== 'object') return;
+
       setOriginTodoList([
         ...originTodoList,
         {
-          id: res.data.id,
-          title: res.data.title,
-          content: res.data.content,
+          id: todo.id,
+          title: todo.title,
+          content: todo.content,
+          userId: todo.userId,
+          createdAt: todo.createdAt,
+          updatedAt: todo.updatedAt,
         },
       ]);
     },
@@ -53,13 +58,17 @@ export const useTodo = () => {
   const updateTodo = useCallback(
     async (id: number, title: string, content: string) => {
       const res = await updateTodoApi(id, title, content);
-      if (!res?.data || typeof res.data !== 'object') return;
+      const updatedTodo = res?.data?.todo;
+      if (!updatedTodo || typeof updatedTodo !== 'object') return;
       const updatedTodoList = originTodoList.map((todo) => {
-        if (res?.data?.id === todo.id) {
+        if (updatedTodo.id === todo.id) {
           return {
-            id: res.data.id,
-            title: res.data.title,
-            content: res.data.content,
+            id: updatedTodo.id,
+            title: updatedTodo.title,
+            content: updatedTodo.content,
+            userId: updatedTodo.userId,
+            createdAt: updatedTodo.createdAt,
+            updatedAt: updatedTodo.updatedAt,
           };
         }
 
@@ -78,10 +87,11 @@ export const useTodo = () => {
   const deleteTodo = useCallback(
     async (targetId: number) => {
       const res = await deleteTodoApi(targetId);
-      if (!res.data || typeof res.data !== 'object') return;
+      const deletedTodo = res.data?.todo;
+      if (!deletedTodo || typeof deletedTodo !== 'object') return;
 
       // todoを削除したtodo listで更新
-      setOriginTodoList(originTodoList.filter((todo) => todo.id !== res?.data?.id));
+      setOriginTodoList(originTodoList.filter((todo) => todo.id !== deletedTodo.id));
     },
     [originTodoList]
   );

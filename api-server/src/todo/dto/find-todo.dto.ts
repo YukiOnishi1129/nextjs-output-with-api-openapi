@@ -18,7 +18,7 @@ export class FindTodoResponseDto {
 
 export class FindTodoListResponseDto {
   @ApiProperty({
-    type: Array<TodoEntity>,
+    type: [TodoEntity],
     example: [
       {
         id: 1,
@@ -46,5 +46,5 @@ export class FindTodoListResponseDto {
       },
     ],
   })
-  todos: Array<TodoEntity>;
+  todos: [TodoEntity];
 }

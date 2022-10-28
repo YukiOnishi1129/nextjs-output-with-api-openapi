@@ -1,4 +1,6 @@
 import axios, { AxiosError } from 'axios';
+import { Configuration } from '@/types/typescript-axios/configuration';
+import { AuthApi, TodoApi } from '@/types/typescript-axios/api';
 
 const BASE_API_URL = process.env.BASE_API_URL || 'http://localhost';
 
@@ -31,8 +33,12 @@ const getToken = () => (localStorage.getItem('access_token') ? localStorage.getI
 
 const getAuthorizationHeader = () => `Bearer ${getToken()}`;
 
+const config = new Configuration({
+  basePath: `${BASE_API_URL}`,
+});
+
 const globalAxios = axios.create({
-  baseURL: `${BASE_API_URL}/api`,
+  baseURL: `${BASE_API_URL}`,
   timeout: 1000,
   headers: {
     'Content-type': 'application/json',
@@ -45,6 +51,10 @@ globalAxios.interceptors.request.use((config) => {
   }
   return config;
 });
+
+export const authApi = new AuthApi(config, '', globalAxios);
+
+export const todoApi = new TodoApi(config, '', globalAxios);
 
 export default globalAxios;
 

@@ -73,7 +73,7 @@ export class TodoController {
   ): Promise<FindTodoListResponseDto> {
     const todos = await this.todoService.findAll(req.user.userId);
     return {
-      todos: todos as Array<TodoEntity>,
+      todos: todos as [TodoEntity],
     };
   }
 

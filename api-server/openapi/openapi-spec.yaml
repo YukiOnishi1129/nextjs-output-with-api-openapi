@@ -259,7 +259,7 @@ components:
               updatedAt: '2021-10-28T08:38:14.237Z'
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/TodoEntity'
       required:
         - todos
     UpdateTodoDto:
@@ -278,7 +278,16 @@ components:
         - content
     SignInUserDto:
       type: object
-      properties: {}
+      properties:
+        email:
+          type: string
+          example: user1@test.com
+        password:
+          type: string
+          example: password
+      required:
+        - email
+        - password
     UserEntity:
       type: object
       properties:
@@ -328,4 +337,17 @@ components:
         - accessToken
     SignUpUserDto:
       type: object
-      properties: {}
+      properties:
+        name:
+          type: string
+          example: ユーザー1
+        email:
+          type: string
+          example: user1@test.com
+        password:
+          type: string
+          example: password
+      required:
+        - name
+        - email
+        - password
