@@ -1,0 +1,131 @@
+openapi: 3.0.0
+paths:
+  /api/todo:
+    post:
+      operationId: TodoController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTodoDto'
+      responses:
+        '201':
+          description: ''
+      tags: &ref_0
+        - todo
+    get:
+      operationId: TodoController_findAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags: *ref_0
+  /api/todo/{id}:
+    get:
+      operationId: TodoController_findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_0
+    patch:
+      operationId: TodoController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTodoDto'
+      responses:
+        '200':
+          description: ''
+      tags: *ref_0
+    delete:
+      operationId: TodoController_remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '201':
+          description: ''
+      tags: *ref_0
+  /api/auth/sign_in:
+    post:
+      operationId: AuthController_signIn
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignInUserDto'
+      responses:
+        '200':
+          description: ''
+      tags: &ref_1
+        - auth
+  /api/auth/sign_up:
+    post:
+      operationId: AuthController_signUp
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpUserDto'
+      responses:
+        '201':
+          description: ''
+      tags: *ref_1
+  /api/auth/authentication:
+    post:
+      operationId: AuthController_authentication
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags: *ref_1
+info:
+  title: API description
+  description: ''
+  version: '1.0'
+  contact: {}
+tags: []
+servers:
+  - url: /
+components:
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+  schemas:
+    CreateTodoDto:
+      type: object
+      properties: {}
+    UpdateTodoDto:
+      type: object
+      properties: {}
+    SignInUserDto:
+      type: object
+      properties: {}
+    SignUpUserDto:
+      type: object
+      properties: {}

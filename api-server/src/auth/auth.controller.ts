@@ -7,12 +7,22 @@ import {
   HttpCode,
   UseGuards,
 } from '@nestjs/common';
+import {
+  ApiTags,
+  ApiBadRequestResponse,
+  ApiOkResponse,
+  ApiUnauthorizedResponse,
+  ApiConflictResponse,
+  ApiCreatedResponse,
+  ApiInternalServerErrorResponse,
+} from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { SignInUserDto } from './dto/sign-in-user.dto';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { JwtPayload } from '../lib/jwt/interfaces/jwt-payload.interface';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

@@ -93,6 +93,7 @@ url: http://localhost
 正常であれば、Todo 一覧画面にリダイレクトする
 
 email: sample1@test.com
+
 password: password
 
 ## 補足

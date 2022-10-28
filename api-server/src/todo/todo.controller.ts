@@ -11,12 +11,22 @@ import {
   ValidationPipe,
   HttpCode,
 } from '@nestjs/common';
+import {
+  ApiTags,
+  ApiBadRequestResponse,
+  ApiOkResponse,
+  ApiUnauthorizedResponse,
+  ApiConflictResponse,
+  ApiCreatedResponse,
+  ApiInternalServerErrorResponse,
+} from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { TodoService } from './todo.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { JwtPayload } from '../lib/jwt/interfaces/jwt-payload.interface';
 
+@ApiTags('todo')
 @Controller('todo')
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
