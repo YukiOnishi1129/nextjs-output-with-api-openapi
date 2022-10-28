@@ -45,6 +45,9 @@ export class TodoController {
     type: FindTodoResponseDto,
     description: 'Todo新規作成完了',
   })
+  @ApiUnauthorizedResponse({
+    description: '認証エラー',
+  })
   async create(
     @Body(ValidationPipe) createTodoDto: CreateTodoDto,
     @Request() req: { user: JwtPayload },
@@ -62,6 +65,9 @@ export class TodoController {
     type: FindTodoListResponseDto,
     description: 'Todoリスト取得完了',
   })
+  @ApiUnauthorizedResponse({
+    description: '認証エラー',
+  })
   async findAll(
     @Request() req: { user: JwtPayload },
   ): Promise<FindTodoListResponseDto> {
@@ -78,6 +84,9 @@ export class TodoController {
     type: FindTodoResponseDto,
     description: 'Todo取得完了',
   })
+  @ApiUnauthorizedResponse({
+    description: '認証エラー',
+  })
   async findOne(@Param('id') id: string, @Request() req: { user: JwtPayload }) {
     const todo = await this.todoService.findOne(+id, req.user.userId);
     return {
@@ -92,6 +101,9 @@ export class TodoController {
     type: FindTodoResponseDto,
     description: 'Todo更新完了',
   })
+  @ApiUnauthorizedResponse({
+    description: '認証エラー',
+  })
   async update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
     const todo = await this.todoService.update(+id, updateTodoDto);
     return {
@@ -105,6 +117,9 @@ export class TodoController {
   @ApiOkResponse({
     type: FindTodoResponseDto,
     description: 'Todo削除完了',
+  })
+  @ApiUnauthorizedResponse({
+    description: '認証エラー',
   })
   async remove(@Param('id') id: string) {
     const todo = await this.todoService.remove(+id);

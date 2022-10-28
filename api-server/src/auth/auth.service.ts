@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { SignInUserDto } from './dto/sign-in-user.dto';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
+import { AuthResponseDto } from './dto/auth-user.dto';
 import { PrismaService } from '../prisma.service';
 import { JwtPayload } from '../lib/jwt/interfaces/jwt-payload.interface';
 import { ResponseUserType } from '../interfaces/User';
@@ -51,7 +52,7 @@ export class AuthService {
     return {
       user: resUser,
       accessToken: this.jwtSecret.sign(payload),
-    };
+    } as AuthResponseDto;
   }
 
   /**
@@ -97,7 +98,7 @@ export class AuthService {
     return {
       user: resUser,
       accessToken: this.jwtSecret.sign(payload),
-    };
+    } as AuthResponseDto;
   }
 
   async authCheck(userId: number) {
@@ -126,6 +127,6 @@ export class AuthService {
     return {
       user: resUser,
       accessToken: this.jwtSecret.sign(payload),
-    };
+    } as AuthResponseDto;
   }
 }
