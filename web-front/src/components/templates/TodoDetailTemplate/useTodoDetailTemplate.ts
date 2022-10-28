@@ -6,10 +6,10 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { fetchTodoDetailApi } from '@/apis/todoApi';
-import { TodoType } from '@/interfaces/Todo';
+import { TodoEntity } from '@/types/typescript-axios/api';
 
 type StatesType = {
-  todo: TodoType | undefined;
+  todo: TodoEntity | undefined;
 };
 
 /**
@@ -17,7 +17,7 @@ type StatesType = {
  */
 export const useTodoDetailTemplate = () => {
   const router = useRouter();
-  const [todo, setTodo] = useState<TodoType | undefined>(undefined);
+  const [todo, setTodo] = useState<TodoEntity | undefined>(undefined);
 
   /**
    * fetchTodoDetail
@@ -26,7 +26,7 @@ export const useTodoDetailTemplate = () => {
     const targetId = router?.query?.id;
     if (!!targetId && typeof targetId === 'string' && !Number.isNaN(Number(targetId))) {
       const res = await fetchTodoDetailApi(Number(targetId));
-      setTodo(res?.data && typeof res.data === 'object' ? res.data : undefined);
+      setTodo(res?.data?.todo && typeof res.data.todo === 'object' ? res.data.todo : undefined);
     }
   }, [router?.query?.id]);
 

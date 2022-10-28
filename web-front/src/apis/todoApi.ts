@@ -1,6 +1,5 @@
-import { AxiosResponse } from 'axios';
-import globalAxios, { isAxiosError, ResponseType, IErrorResponse } from '@/apis/config';
-import { TodoType } from '@/interfaces/Todo';
+import { todoApi, isAxiosError, ResponseType, IErrorResponse } from '@/apis/config';
+import { FindTodoListResponseDto, FindTodoResponseDto } from '@/types/typescript-axios/api';
 
 /**
  * Todoリスト取得のAPI接続処理
@@ -8,8 +7,8 @@ import { TodoType } from '@/interfaces/Todo';
  */
 export const fetchTodoListApi = async () => {
   try {
-    const { data }: AxiosResponse<Array<TodoType>> = await globalAxios.get('/todo');
-    const res: ResponseType<Array<TodoType>> = {
+    const { data } = await todoApi.todoControllerFindAll();
+    const res: ResponseType<FindTodoListResponseDto> = {
       code: 200,
       data,
     };
@@ -35,8 +34,8 @@ export const fetchTodoListApi = async () => {
  */
 export const fetchTodoDetailApi = async (id: number) => {
   try {
-    const { data }: AxiosResponse<TodoType> = await globalAxios.get(`/todo/${id}`);
-    const res: ResponseType<TodoType> = {
+    const { data } = await todoApi.todoControllerFindOne(String(id));
+    const res: ResponseType<FindTodoResponseDto> = {
       code: 200,
       data,
     };
@@ -63,11 +62,11 @@ export const fetchTodoDetailApi = async (id: number) => {
  */
 export const createTodoApi = async (title: string, content: string) => {
   try {
-    const { data }: AxiosResponse<TodoType> = await globalAxios.post('/todo', {
+    const { data } = await todoApi.todoControllerCreate({
       title,
       content,
     });
-    const res: ResponseType<TodoType> = {
+    const res: ResponseType<FindTodoResponseDto> = {
       code: 200,
       data,
     };
@@ -95,11 +94,11 @@ export const createTodoApi = async (title: string, content: string) => {
  */
 export const updateTodoApi = async (id: number, title: string, content: string) => {
   try {
-    const { data }: AxiosResponse<TodoType> = await globalAxios.patch(`/todo/${id}`, {
+    const { data } = await todoApi.todoControllerUpdate(String(id), {
       title,
       content,
     });
-    const res: ResponseType<TodoType> = {
+    const res: ResponseType<FindTodoResponseDto> = {
       code: 200,
       data,
     };
@@ -125,8 +124,8 @@ export const updateTodoApi = async (id: number, title: string, content: string) 
  */
 export const deleteTodoApi = async (id: number) => {
   try {
-    const { data }: AxiosResponse<TodoType> = await globalAxios.delete(`/todo/${id}`);
-    const res: ResponseType<TodoType> = {
+    const { data } = await todoApi.todoControllerRemove(String(id));
+    const res: ResponseType<FindTodoResponseDto> = {
       code: 200,
       data,
     };

@@ -1,0 +1,353 @@
+openapi: 3.0.0
+paths:
+  /api/todo:
+    post:
+      operationId: TodoController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTodoDto'
+      responses:
+        '201':
+          description: Todo新規作成完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindTodoResponseDto'
+        '401':
+          description: 認証エラー
+      tags: &ref_0
+        - todo
+      security: &ref_1
+        - bearer: []
+    get:
+      operationId: TodoController_findAll
+      parameters: []
+      responses:
+        '200':
+          description: Todoリスト取得完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindTodoListResponseDto'
+        '401':
+          description: 認証エラー
+      tags: *ref_0
+      security: *ref_1
+  /api/todo/{id}:
+    get:
+      operationId: TodoController_findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Todo取得完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindTodoResponseDto'
+        '401':
+          description: 認証エラー
+      tags: *ref_0
+      security: *ref_1
+    patch:
+      operationId: TodoController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTodoDto'
+      responses:
+        '200':
+          description: Todo更新完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindTodoResponseDto'
+        '401':
+          description: 認証エラー
+      tags: *ref_0
+      security: *ref_1
+    delete:
+      operationId: TodoController_remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Todo削除完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindTodoResponseDto'
+        '401':
+          description: 認証エラー
+      tags: *ref_0
+      security: *ref_1
+  /api/auth/sign_in:
+    post:
+      operationId: AuthController_signIn
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignInUserDto'
+      responses:
+        '200':
+          description: ログイン完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponseDto'
+        '401':
+          description: 認証エラー
+      tags: &ref_2
+        - auth
+  /api/auth/sign_up:
+    post:
+      operationId: AuthController_signUp
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpUserDto'
+      responses:
+        '201':
+          description: 会員登録完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponseDto'
+        '401':
+          description: 認証エラー
+      tags: *ref_2
+  /api/auth/authentication:
+    post:
+      operationId: AuthController_authentication
+      parameters: []
+      responses:
+        '200':
+          description: 認証チェックOK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponseDto'
+        '401':
+          description: 認証エラー
+      tags: *ref_2
+      security:
+        - bearer: []
+info:
+  title: API description
+  description: ''
+  version: '1.0'
+  contact: {}
+tags: []
+servers:
+  - url: /
+components:
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+  schemas:
+    CreateTodoDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Todo4 created
+          minLength: 2
+          maxLength: 25
+        content:
+          type: string
+          example: Todo content4 sample created
+      required:
+        - title
+        - content
+    TodoEntity:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        title:
+          type: string
+          example: Todo1 sample
+          minLength: 2
+          maxLength: 25
+        content:
+          type: string
+          example: Todo content1 sample
+        userId:
+          type: string
+          example: 1
+        createdAt:
+          format: date-time
+          type: string
+          example: '2022-10-28T08:38:14.237Z'
+        updatedAt:
+          format: date-time
+          type: string
+          example: '2022-10-28T08:38:14.237Z'
+      required:
+        - id
+        - title
+        - content
+        - userId
+        - createdAt
+        - updatedAt
+    FindTodoResponseDto:
+      type: object
+      properties:
+        todo:
+          example:
+            id: 1
+            title: Todo1 sample
+            content: Todo content1 sample
+            userId: 1
+            createdAt: '2022-10-28T08:38:14.237Z'
+            updatedAt: '2022-10-28T08:38:14.237Z'
+          allOf:
+            - $ref: '#/components/schemas/TodoEntity'
+      required:
+        - todo
+    FindTodoListResponseDto:
+      type: object
+      properties:
+        todos:
+          example:
+            - id: 1
+              title: Todo1 sample
+              content: Todo content1 sample
+              userId: 1
+              createdAt: '2021-10-28T08:38:14.237Z'
+              updatedAt: '2021-10-28T08:38:14.237Z'
+            - id: 2
+              title: Todo2 sample
+              content: Todo content2 sample
+              userId: 1
+              createdAt: '2021-10-28T08:38:14.237Z'
+              updatedAt: '2021-10-28T08:38:14.237Z'
+            - id: 3
+              title: Todo3 sample
+              content: Todo content3 sample
+              userId: 1
+              createdAt: '2021-10-28T08:38:14.237Z'
+              updatedAt: '2021-10-28T08:38:14.237Z'
+          type: array
+          items:
+            $ref: '#/components/schemas/TodoEntity'
+      required:
+        - todos
+    UpdateTodoDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Todo4 update
+          minLength: 2
+          maxLength: 25
+        content:
+          type: string
+          example: Todo content4 sample update
+      required:
+        - title
+        - content
+    SignInUserDto:
+      type: object
+      properties:
+        email:
+          type: string
+          example: user1@test.com
+        password:
+          type: string
+          example: password
+      required:
+        - email
+        - password
+    UserEntity:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: ユーザー1
+          minLength: 2
+          maxLength: 25
+        email:
+          type: string
+          example: user1@test.com
+          maxLength: 255
+        createdAt:
+          format: date-time
+          type: string
+          example: '2022-10-28T08:38:14.237Z'
+        updatedAt:
+          format: date-time
+          type: string
+          example: '2022-10-28T08:38:14.237Z'
+      required:
+        - id
+        - name
+        - email
+        - createdAt
+        - updatedAt
+    AuthResponseDto:
+      type: object
+      properties:
+        user:
+          example:
+            id: 1
+            name: ユーザー1
+            email: user1@test.com
+            createdAt: '2022-10-28T08:38:14.237Z'
+            updatedAt: '2022-10-28T08:38:14.237Z'
+          allOf:
+            - $ref: '#/components/schemas/UserEntity'
+        accessToken:
+          type: string
+          example: token
+      required:
+        - user
+        - accessToken
+    SignUpUserDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: ユーザー1
+        email:
+          type: string
+          example: user1@test.com
+        password:
+          type: string
+          example: password
+      required:
+        - name
+        - email
+        - password

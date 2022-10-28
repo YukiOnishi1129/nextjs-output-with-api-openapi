@@ -1,7 +1,7 @@
-import { Todo } from '@prisma/client';
+import { User } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class TodoEntity implements Todo {
+export class UserEntity implements Omit<User, 'password'> {
   @ApiProperty({
     example: 1,
     type: Number,
@@ -9,24 +9,19 @@ export class TodoEntity implements Todo {
   id: number;
 
   @ApiProperty({
-    example: 'Todo1 sample',
+    example: 'ユーザー1',
     type: String,
     minLength: 2,
     maxLength: 25,
   })
-  title: string;
+  name: string;
 
   @ApiProperty({
-    example: 'Todo content1 sample',
+    example: 'user1@test.com',
     type: String,
+    maxLength: 255,
   })
-  content: string;
-
-  @ApiProperty({
-    example: 1,
-    type: String,
-  })
-  userId: number;
+  email: string;
 
   @ApiProperty({
     example: '2022-10-28T08:38:14.237Z',

@@ -1,6 +1,5 @@
-import { AxiosResponse } from 'axios';
-import globalAxios, { isAxiosError, ResponseType, IErrorResponse } from '@/apis/config';
-import { AuthResponseType } from '@/interfaces/User';
+import { authApi, isAxiosError, ResponseType, IErrorResponse } from '@/apis/config';
+import { AuthResponseDto } from '@/types/typescript-axios/api';
 
 /**
  * ログインAPI
@@ -10,11 +9,11 @@ import { AuthResponseType } from '@/interfaces/User';
  */
 export const signInApi = async (email: string, password: string) => {
   try {
-    const { data }: AxiosResponse<AuthResponseType> = await globalAxios.post('auth/sign_in', {
+    const { data } = await authApi.authControllerSignIn({
       email,
       password,
     });
-    const res: ResponseType<AuthResponseType> = {
+    const res: ResponseType<AuthResponseDto> = {
       code: 200,
       data,
     };
@@ -42,12 +41,12 @@ export const signInApi = async (email: string, password: string) => {
  */
 export const signUpApi = async (name: string, email: string, password: string) => {
   try {
-    const { data }: AxiosResponse<AuthResponseType> = await globalAxios.post('auth/sign_up', {
+    const { data } = await authApi.authControllerSignUp({
       name,
       email,
       password,
     });
-    const res: ResponseType<AuthResponseType> = {
+    const res: ResponseType<AuthResponseDto> = {
       code: 200,
       data,
     };
@@ -72,8 +71,8 @@ export const signUpApi = async (name: string, email: string, password: string) =
  */
 export const authenticationApi = async () => {
   try {
-    const { data }: AxiosResponse<AuthResponseType> = await globalAxios.post('/auth/authentication/');
-    const res: ResponseType<AuthResponseType> = {
+    const { data } = await authApi.authControllerAuthentication();
+    const res: ResponseType<AuthResponseDto> = {
       code: 200,
       data,
     };

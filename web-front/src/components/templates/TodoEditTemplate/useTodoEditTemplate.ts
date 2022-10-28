@@ -6,25 +6,25 @@
 import { useMemo, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { NAVIGATION_PATH } from '@/constants/navigation';
-import { TodoType } from '@/interfaces/Todo';
+import { TodoEntity } from '@/types/typescript-axios/api';
 import { EventType } from '@/interfaces/Event';
 
 type Params = {
-  originTodoList: Array<TodoType>
+  originTodoList: Array<TodoEntity>;
   updateTodo: (id: number, title: string, content: string) => void;
-}
+};
 
 type StatesType = {
-  todo: TodoType | undefined
-  inputTitle: string,
-  inputContent: string
-}
+  todo: TodoEntity | undefined;
+  inputTitle: string;
+  inputContent: string;
+};
 
 type ActionsType = {
-  handleChangeTitle: EventType['onChangeInput']
-  handleChangeContent: EventType['onChangeTextArea']
-  handleUpdateTodo: EventType['onSubmit']
-}
+  handleChangeTitle: EventType['onChangeInput'];
+  handleChangeContent: EventType['onChangeTextArea'];
+  handleUpdateTodo: EventType['onSubmit'];
+};
 
 /**
  * useTodoEditTemplate
@@ -45,19 +45,13 @@ export const useTodoEditTemplate = ({ originTodoList, updateTodo }: Params) => {
    * 「title」変更処理
    * @type {function(*): void}
    */
-  const handleChangeTitle: EventType['onChangeInput'] = useCallback(
-    (e) => setInputTitle(e.target.value),
-    []
-  );
+  const handleChangeTitle: EventType['onChangeInput'] = useCallback((e) => setInputTitle(e.target.value), []);
 
   /**
    * 「content」変更処理
    * @type {function(*): void}
    */
-  const handleChangeContent: EventType['onChangeTextArea'] = useCallback(
-    (e) => setInputContent(e.target.value),
-    []
-  );
+  const handleChangeContent: EventType['onChangeTextArea'] = useCallback((e) => setInputContent(e.target.value), []);
 
   /**
    * Todo更新処理
@@ -77,13 +71,13 @@ export const useTodoEditTemplate = ({ originTodoList, updateTodo }: Params) => {
   const states: StatesType = {
     todo,
     inputTitle,
-    inputContent
+    inputContent,
   };
 
   const actions: ActionsType = {
     handleChangeTitle,
     handleChangeContent,
-    handleUpdateTodo
+    handleUpdateTodo,
   };
 
   return [states, actions] as const;

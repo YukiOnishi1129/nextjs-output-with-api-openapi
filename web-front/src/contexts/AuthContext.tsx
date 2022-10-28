@@ -4,7 +4,7 @@
  * @package contexts
  */
 import { FC, ReactNode, useContext, createContext } from 'react';
-import { UserType } from '@/interfaces/User';
+import { UserEntity } from '@/types/typescript-axios/api';
 import { useAuth } from '@/hooks/useAuth';
 
 type Props = {
@@ -12,9 +12,9 @@ type Props = {
 };
 
 interface ContextInterface {
-  user: UserType | undefined;
+  user: UserEntity | undefined;
   isAuth: boolean;
-  singIn: (user: UserType) => Promise<void>;
+  singIn: (user: UserEntity) => Promise<void>;
   signOut: () => Promise<void>;
 }
 
