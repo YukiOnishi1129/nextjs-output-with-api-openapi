@@ -20,6 +20,7 @@ async function bootstrap() {
     .addServer('/')
     .addBearerAuth() // swaggerのauthorizeを有効化
     .build();
+
   const document = SwaggerModule.createDocument(app, config);
 
   // YAML

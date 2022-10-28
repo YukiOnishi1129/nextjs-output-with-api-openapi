@@ -12,16 +12,27 @@ paths:
               $ref: '#/components/schemas/CreateTodoDto'
       responses:
         '201':
-          description: ''
+          description: Todo新規作成完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindTodoResponseDto'
       tags: &ref_0
         - todo
+      security: &ref_1
+        - bearer: []
     get:
       operationId: TodoController_findAll
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Todoリスト取得完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindTodoListResponseDto'
       tags: *ref_0
+      security: *ref_1
   /api/todo/{id}:
     get:
       operationId: TodoController_findOne
@@ -33,8 +44,13 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Todo取得完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindTodoResponseDto'
       tags: *ref_0
+      security: *ref_1
     patch:
       operationId: TodoController_update
       parameters:
@@ -51,8 +67,13 @@ paths:
               $ref: '#/components/schemas/UpdateTodoDto'
       responses:
         '200':
-          description: ''
+          description: Todo更新完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindTodoResponseDto'
       tags: *ref_0
+      security: *ref_1
     delete:
       operationId: TodoController_remove
       parameters:
@@ -62,9 +83,14 @@ paths:
           schema:
             type: string
       responses:
-        '201':
-          description: ''
+        '200':
+          description: Todo削除完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindTodoResponseDto'
       tags: *ref_0
+      security: *ref_1
   /api/auth/sign_in:
     post:
       operationId: AuthController_signIn
@@ -78,7 +104,7 @@ paths:
       responses:
         '200':
           description: ''
-      tags: &ref_1
+      tags: &ref_2
         - auth
   /api/auth/sign_up:
     post:
@@ -93,7 +119,7 @@ paths:
       responses:
         '201':
           description: ''
-      tags: *ref_1
+      tags: *ref_2
   /api/auth/authentication:
     post:
       operationId: AuthController_authentication
@@ -101,7 +127,7 @@ paths:
       responses:
         '200':
           description: ''
-      tags: *ref_1
+      tags: *ref_2
 info:
   title: API description
   description: ''
@@ -119,10 +145,107 @@ components:
   schemas:
     CreateTodoDto:
       type: object
-      properties: {}
+      properties:
+        title:
+          type: string
+          example: Todo4 created
+          minLength: 2
+          maxLength: 25
+        content:
+          type: string
+          example: Todo content4 sample created
+      required:
+        - title
+        - content
+    TodoEntity:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        title:
+          type: string
+          example: Todo1 sample
+          minLength: 2
+          maxLength: 25
+        content:
+          type: string
+          example: Todo content1 sample
+        userId:
+          type: string
+          example: 1
+        createdAt:
+          format: date-time
+          type: string
+          example: '2022-10-28T08:38:14.237Z'
+        updatedAt:
+          format: date-time
+          type: string
+          example: '2022-10-28T08:38:14.237Z'
+      required:
+        - id
+        - title
+        - content
+        - userId
+        - createdAt
+        - updatedAt
+    FindTodoResponseDto:
+      type: object
+      properties:
+        todo:
+          example:
+            id: 1
+            title: Todo1 sample
+            content: Todo content1 sample
+            userId: 1
+            createdAt: '2022-10-28T08:38:14.237Z'
+            updatedAt: '2022-10-28T08:38:14.237Z'
+          allOf:
+            - $ref: '#/components/schemas/TodoEntity'
+      required:
+        - todo
+    FindTodoListResponseDto:
+      type: object
+      properties:
+        todos:
+          example:
+            - id: 1
+              title: Todo1 sample
+              content: Todo content1 sample
+              userId: 1
+              createdAt: '2021-10-28T08:38:14.237Z'
+              updatedAt: '2021-10-28T08:38:14.237Z'
+            - id: 2
+              title: Todo2 sample
+              content: Todo content2 sample
+              userId: 1
+              createdAt: '2021-10-28T08:38:14.237Z'
+              updatedAt: '2021-10-28T08:38:14.237Z'
+            - id: 3
+              title: Todo3 sample
+              content: Todo content3 sample
+              userId: 1
+              createdAt: '2021-10-28T08:38:14.237Z'
+              updatedAt: '2021-10-28T08:38:14.237Z'
+          type: array
+          items:
+            type: string
+      required:
+        - todos
     UpdateTodoDto:
       type: object
-      properties: {}
+      properties:
+        title:
+          type: string
+          example: Todo4 update
+          minLength: 2
+          maxLength: 25
+        content:
+          type: string
+          example: Todo content4 sample update
+      required:
+        - title
+        - content
     SignInUserDto:
       type: object
       properties: {}
