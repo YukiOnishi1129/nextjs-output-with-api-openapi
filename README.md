@@ -102,80 +102,38 @@ password: password
 
 <br />
 
-## API 仕様書表示
-
-OPEN API を使った API 仕様書
-
-Open API について
-
+## Open APIについて
 - https://swagger.io/docs/specification/about/
 - https://www.alpha.co.jp/blog/202208_02
 
-バックエンド API の仕様書をブラウザに表示する
+### API仕様書の確認方法
+- https://github.com/YukiOnishi1129/nextjs-output-with-api-openapi/wiki/API%E4%BB%95%E6%A7%98%E6%9B%B8%E3%81%AE%E7%A2%BA%E8%AA%8D%E6%96%B9%E6%B3%95
 
-(これがあるとバックエンドのコードを見なくても API の仕様を確認することができるので、フロントエンドの開発効率が上がる)
+### ダミーAPIの環境構築
+- https://github.com/YukiOnishi1129/nextjs-output-with-api-openapi/wiki/%E3%83%80%E3%83%9F%E3%83%BCAPI%E3%81%AE%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89
 
-```
-cd open-api
+### フロントエンドコードの自動生成について
+- https://github.com/YukiOnishi1129/nextjs-output-with-api-openapi/wiki/%E3%83%95%E3%83%AD%E3%83%B3%E3%83%88%E3%82%A8%E3%83%B3%E3%83%89%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AE%E8%87%AA%E5%8B%95%E7%94%9F%E6%88%90%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6
 
-docker-compose up -d
-```
-
-以下の url で API 仕様書を表示
-
-http://localhost:8000
-
-<br />
-
-## Open API generator によるフロントエンドコードの自動生成
-
-Open API の定義をもとに、コードを自動生成する
-
-フロントエンドの API 通信処理のロジックや API のリクエストとレスポンスの型定義も自動生成できる
-
-Open API generator について
-
-- https://github.com/OpenAPITools/openapi-generator
-
-### 方法
-
-- フロントエンドのディレクトリに移動し、以下のコマンドを実行
-
-```
-cd web-front
-
-// open api generator起動
-npm run generate-client
-```
-
-- 以下のディレクトリ直下に API 接続処理及び API の型定義が自動生成される
-
-```
-web-front/src/types/typescript-axios
-```
-
-#### Open API generator の仕組み説明
-
-`npm run generate-client` コマンドの内容は以下にようになっている
-
-web-front/src/package.json
-
-```
-"scripts": {
-  ・・・
-   "generate-client": "openapi-generator-cli generate -g typescript-axios -i ../api-server/openapi/openapi-spec.yaml -o ./src/types/typescript-axios"
-},
-```
-
-以下のように OpenAPI の yaml ファイルを元に自動生成し、その生成したコードをコマンドに示したディレクトリにセットする内容になっている。
-
-```
-openapi-generator-cli generate -g typescript-axios -i [OpenAPIのymlファイルがあるパス] -o [自動生成したコードをセットするディレクトリのパス]
-```
 
 <br />
 
 ## 補足
+
+### DB関連の情報
+- 以下の情報を元に「sequel ace」などを用いてDBコンテナにアクセスすれば、DBのデータの状態を確認できる
+
+````
+DBMS: mysql: 8.0
+host: 127.0.0.1
+database: NEXTJS_OUTPUT_WITH_OPENAPI_DB
+user: user
+password: pass
+port: 3306
+````
+
+- sequel aceについて
+- https://qiita.com/ucan-lab/items/b1304eee2157dbef7774
 
 ### DB のデータを初期化したい場合
 
@@ -190,7 +148,7 @@ docker-compose down -v
 
 フロントエンド、バックエンド、DB コンテナのログを確認する方法
 
-### 1. コンテナ ID を確認
+1. コンテナ ID を確認
 
 コンテナを起動している状態で、以下のコマンドでコンテナ ID(CONTAINER ID)を確認する。
 
@@ -204,7 +162,7 @@ docker ps
 - フロントエンド: nestjs_output_with_openapi_frontend
 - DB: mysql:8.0
 
-以下のコマンドで各コンテナのログを確認
+2. 以下のコマンドで各コンテナのログを確認
 
 ```
 docker logs [コンテナID]
