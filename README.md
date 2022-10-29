@@ -93,7 +93,7 @@ url: http://localhost
 
 ### 1. ログインを実行
 
-ログイン画面 (http://localhost)で以下のメールアドレス、パスワードを入力してログインできることを確認。
+ログイン画面 (http://localhost) で以下のメールアドレス、パスワードを入力してログインできることを確認。
 正常であれば、Todo 一覧画面にリダイレクトする
 
 email: sample1@test.com
