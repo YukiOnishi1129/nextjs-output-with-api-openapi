@@ -17,7 +17,7 @@ Open API を用いたスキーマ駆動開発を取り入れた Web サービス
 ### バックエンド
 
 - nestjs: 9.0.0
-- prisma: 4.4.0
+- prisma: 5.22.0
 - typescript: 4.3.5
 - bcrypt: 5.1.0
 - passport-jwt: 4.0.0

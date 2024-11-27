@@ -44,6 +44,7 @@ services:
     volumes:
       - nestjs_output_with_openapi_data:/var/lib/mysql
       - ./mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+      - ./mysql:/docker-entrypoint-initdb.d
     ports:
       - 3306:3306
 
